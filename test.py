@@ -1,9 +1,9 @@
 import pickle
 from sentence_transformers.cross_encoder import CrossEncoder
 
-trained_model = "tuned_model-ce_bert-base-uncased_epoch1_batch8_matched"
+trained_model = "output/tuned_model-ce_bert-base-uncased_epoch1_batch8_matched"
 
-with open('pkl_files/dev_small_map.pkl', 'rb') as f:
+with open('data/pkl_files/dev_small_map.pkl', 'rb') as f:
     q_dic_test = pickle.load(f)
 
 sentences = []
@@ -16,11 +16,10 @@ for key in q_dic_test:
     sentences.append([q_text, qp_text, qp_performance, first_doc_text])
     queries.append(key)
 
-model = CrossEncoder("models/" + trained_model, num_labels=1)
+model = CrossEncoder(trained_model, num_labels=1)
 scores = model.predict(sentences)
-actual = []
 predicted = []
-with open('results/' + trained_model, 'w') as f:
+with open(trained_model + '/results.txt', 'w') as f:
     for i in range(len(sentences)):
         predicted.append(float(scores[i]))
         f.write(queries[i] + '\t' + str(predicted[i]) + '\n')

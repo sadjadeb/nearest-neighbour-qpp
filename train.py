@@ -3,15 +3,18 @@ from sentence_transformers import InputExample
 from torch.utils.data import DataLoader
 import pickle
 import math
+import os
 
 batch_size = 8
 epoch_num = 1
 model_name = 'bert-base-uncased'
-model_path = f"models/tuned_model-ce_{model_name}_epoch{epoch_num}_batch{batch_size}_matched"
+model_path = f"output/tuned_model-ce_{model_name}_epoch{epoch_num}_batch{batch_size}_matched"
+
+os.makedirs(model_path, exist_ok=True)
 
 model = CrossEncoder(model_name, num_labels=1)
 
-with open('pkl_files/train_map.pkl', 'rb') as f:
+with open('data/pkl_files/train_map.pkl', 'rb') as f:
     q_dic_train = pickle.load(f)
 
 train_set = []
@@ -33,4 +36,4 @@ model.fit(train_dataloader=train_dataloader,
           epochs=epoch_num,
           warmup_steps=warmup_steps,
           output_path=model_path)
-model.save(model_name)
+model.save(model_path)

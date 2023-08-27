@@ -38,5 +38,5 @@ with open(first_docs_filepath, 'r') as f:
         if qid in q_map_dic.keys():
             q_map_dic[qid]["doc_text"] = col_dic[doc_id]
 
-with open('pkl_files/dev_small_map.pkl', 'wb') as f:
+with open('data/pkl_files/dev_small_map.pkl', 'wb') as f:
     pickle.dump(q_map_dic, f, pickle.HIGHEST_PROTOCOL)

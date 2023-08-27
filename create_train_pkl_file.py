@@ -43,6 +43,6 @@ with open(matched_queries_filepath, 'r', encoding='utf-8') as f:
         else:
             del q_map_dic[qid]
 
-with open('pkl_files/train_map.pkl', 'wb') as f:
+with open('data/pkl_files/train_map.pkl', 'wb') as f:
     pickle.dump(q_map_dic, f, pickle.HIGHEST_PROTOCOL)
     print(f"Saved {len(q_map_dic)} queries to pkl file.")
