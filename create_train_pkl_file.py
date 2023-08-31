@@ -2,7 +2,7 @@ import pickle
 from collections import defaultdict
 import os
 
-data_folder = '/data'
+data_folder = 'data'
 
 col_dic = defaultdict(list)
 collection_filepath = os.path.join(data_folder, 'collection.tsv')
@@ -35,13 +35,15 @@ with open(first_docs_filepath, 'r') as f:
 # qid<\t>pos_qid
 matched_queries_filepath = os.path.join(data_folder, 'top_1_train-train_matched_queries.tsv')
 with open(matched_queries_filepath, 'r', encoding='utf-8') as f:
-    for line in f:
+    lines = f.readlines()
+    for line in lines[1:]:
         qid, qtext, matched_qid, matched_qtext, rank = line.strip().split('\t')
-        if qid in q_map_dic.keys() and matched_qid in q_map_dic.keys():
-            q_map_dic[qid]["matched_qtext"] = q_map_dic[matched_qid]["qtext"]
-            q_map_dic[qid]["matched_performance"] = str(int(q_map_dic[matched_qid]["performance"] * 100))
-        else:
-            del q_map_dic[qid]
+        if qid in q_map_dic.keys():
+            if matched_qid in q_map_dic.keys():
+                q_map_dic[qid]["matched_qtext"] = q_map_dic[matched_qid]["qtext"]
+                q_map_dic[qid]["matched_performance"] = str(int(q_map_dic[matched_qid]["performance"] * 100))
+            else:
+                del q_map_dic[qid]
 
 with open('data/pkl_files/train_map.pkl', 'wb') as f:
     pickle.dump(q_map_dic, f, pickle.HIGHEST_PROTOCOL)

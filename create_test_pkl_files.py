@@ -2,7 +2,7 @@ import pickle
 from collections import defaultdict
 import os
 
-data_folder = '/data'
+data_folder = 'data'
 
 col_dic = defaultdict(list)
 collection_filepath = os.path.join(data_folder, 'collection.tsv')
@@ -18,12 +18,13 @@ map_filepath = os.path.join(data_folder, 'eval_per_query', 'train_query_map_20.t
 with open(map_filepath, 'r') as f:
     for line in f:
         qid, qtext, performance = line.strip().split('\t')
-        train_performance[qid] = performance
+        train_performance[qid] = float(performance)
 
 q_map_dic = {}
-queries_filepath = os.path.join(data_folder, 'top_1_dev-train_matched_queries.tsv')
+queries_filepath = os.path.join(data_folder, 'top_1_train-dev_matched_queries.tsv')
 with open(queries_filepath, 'r') as f:
-    for line in f:
+    lines = f.readlines()
+    for line in lines[1:]:
         qid, qtext, matched_qid, matched_qtext, rank = line.strip().split('\t')
         q_map_dic[qid] = {}
         q_map_dic[qid]["qtext"] = qtext
@@ -40,3 +41,4 @@ with open(first_docs_filepath, 'r') as f:
 
 with open('data/pkl_files/dev_small_map.pkl', 'wb') as f:
     pickle.dump(q_map_dic, f, pickle.HIGHEST_PROTOCOL)
+    print(f"Saved {len(q_map_dic)} queries to pkl file.")
