@@ -31,7 +31,7 @@ with open(queries_filepath, 'r') as f:
         q_map_dic[qid]["matched_qtext"] = matched_qtext
         q_map_dic[qid]["matched_performance"] = str(int(train_performance[matched_qid] * 100))
 
-first_docs_filepath = os.path.join(data_folder, 'run', 'bm25_first_docs_dev.tsv')
+first_docs_filepath = os.path.join(data_folder, 'first_docs', 'bm25_first_docs_dev.tsv')
 with open(first_docs_filepath, 'r') as f:
     lines = f.readlines()
     for line in lines:

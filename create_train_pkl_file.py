@@ -24,7 +24,7 @@ with open(map_filepath, 'r') as f:
 
 # run file including first retrieved documents per query
 # qid<\t>doc_id<\t>rank
-first_docs_filepath = os.path.join(data_folder, 'run', 'bm25_first_docs_train.tsv')
+first_docs_filepath = os.path.join(data_folder, 'first_docs', 'bm25_first_docs_train.tsv')
 with open(first_docs_filepath, 'r') as f:
     for line in f:
         qid, doc_id, rank = line.split('\t')
