@@ -6,6 +6,21 @@ Modified by: Sajad Ebrahimi
 import argparse
 import pytrec_eval
 import json
+import os
+
+data_folder = 'data'
+
+
+def parse_qrel(file):
+    qrels = {}
+    for line in file:
+        query_id, _, doc_id, relevance = line.strip().split()
+        query_id = int(query_id)
+        relevance = int(relevance)
+        if query_id not in qrels:
+            qrels[query_id] = {}
+        qrels[query_id][doc_id] = relevance
+    return qrels
 
 
 def evaluation(args):
@@ -27,7 +42,7 @@ def evaluation(args):
         run = pytrec_eval.parse_run(f_run)
 
     with open(args.qrel, 'r') as f_qrel:
-        qrel = pytrec_eval.parse_qrel(f_qrel)
+        qrel = parse_qrel(f_qrel)
 
     print("len(list(run))", len(list(run)))
     print("len(list(qrel))", len(list(qrel)))
@@ -43,7 +58,8 @@ def evaluation(args):
         run_10[qid] = dict(sorted_did_score[0:10])
         run_100[qid] = dict(sorted_did_score[0:100])
 
-    evaluator_ndcg = pytrec_eval.RelevanceEvaluator(qrel, {'ndcg_cut_3', 'ndcg_cut_10', 'ndcg_cut_100', 'ndcg_cut_1000'})
+    evaluator_ndcg = pytrec_eval.RelevanceEvaluator(qrel, {'ndcg_cut_3', 'ndcg_cut_10', 'ndcg_cut_100',
+                                                           'ndcg_cut_1000'})
     results_ndcg = evaluator_ndcg.evaluate(run)
 
     results = {}
@@ -52,7 +68,8 @@ def evaluation(args):
         for measure, score in results_ndcg[qid].items():
             results[qid][mapping[measure]] = score
 
-    evaluator_general = pytrec_eval.RelevanceEvaluator(qrel, {'map_cut_10', 'map_cut_100', 'map_cut_1000', 'recall_5', 'recall_100', 'recall_1000'})
+    evaluator_general = pytrec_eval.RelevanceEvaluator(qrel, {'map_cut_10', 'map_cut_100', 'map_cut_1000',
+                                                              'recall_5', 'recall_100', 'recall_1000'})
     results_general = evaluator_general.evaluate(run)
 
     for qid, _ in results.items():
@@ -74,7 +91,7 @@ def evaluation(args):
         print('{}: {:.4f}'.format(measure, overall))
 
     run_name = args.run.split("/")[-1]
-    output_path = f'{run_name}_evaluation-per-query.json'
+    output_path = os.path.join(data_folder, 'eval_per_query', f'{run_name}_evaluation-per-query.json')
     with open(output_path, 'w', encoding='utf-8') as f:
         f.write(json.dumps(results))
 
@@ -83,7 +100,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--run', type=str, required=True)
-    parser.add_argument('--qrel', type=str, required=True)
+    parser.add_argument('--qrels', type=str, required=True)
 
     args = parser.parse_args()
     evaluation(args)

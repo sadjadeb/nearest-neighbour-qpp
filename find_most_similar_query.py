@@ -33,14 +33,14 @@ def find_similar_queries(args):
 
     queries_embeddings = model.encode(queries_list, convert_to_tensor=True, show_progress_bar=True, batch_size=128)
     if args.save_embeddings:
-        torch.save(queries_embeddings, output_path + f'/{base_queries}_queries_tensor.pt')
+        torch.save(queries_embeddings, output_path + f'/{base_queries}_{model_name}_queries_tensor.pt')
 
     index = faiss.IndexFlatL2(embedding_dimension_size)
     print(index.is_trained)
     index.add(queries_embeddings.detach().cpu().numpy())
     print(index.ntotal)
     if args.save_index:
-        faiss.write_index(index, output_path + f'/{base_queries_name}_queries.index')
+        faiss.write_index(index, output_path + f'/{base_queries_name}_{model_name}_queries.index')
 
     target_queries = {}
     queries_list = []
@@ -56,7 +56,7 @@ def find_similar_queries(args):
     D, I = index.search(xq, top_k)
     print(f'Search time: {time.strftime("%H:%M:%S", time.gmtime(time.time() - start_time))}')
 
-    with open(output_path + f'/top_{top_k - 1}_{base_queries_name}-{target_queries_name}_matched_queries.tsv', 'w', encoding='utf-8') as fOut:
+    with open(output_path + f'/top_{top_k - 1}_{base_queries_name}-{target_queries_name}_{model_name.split("/")[-1]}_matched_queries.tsv', 'w', encoding='utf-8') as fOut:
         t_qids = list(target_queries.keys())
         b_qids = list(base_queries.keys())
         fOut.write(f'qid\tquery\tmatched_qid\tmatched_query\trank\n')
