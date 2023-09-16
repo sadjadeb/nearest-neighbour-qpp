@@ -2,7 +2,7 @@ import pickle
 from sentence_transformers.cross_encoder import CrossEncoder
 
 model_name = 'bert-base-uncased'
-trained_model = f"output/QPP_{model_name}_matched"
+trained_model = f"output/QPP_{model_name.split('/')[-1]}_matched"
 
 with open('data/pkl_files/dev_all-MiniLM-L6-v2_mrr10.pkl', 'rb') as f:
     q_dic_test = pickle.load(f)

@@ -2,7 +2,7 @@ import pickle
 from sentence_transformers import SentenceTransformer, util
 
 model_name = 'bert-base-uncased'
-trained_model = f"output/QPP_bi_{model_name}_matched"
+trained_model = f"output/QPP_bi_{model_name.split('/')[-1]}_matched"
 
 with open('data/pkl_files/dev_all-MiniLM-L6-v2_mrr20.pkl', 'rb') as f:
     q_dic_test = pickle.load(f)

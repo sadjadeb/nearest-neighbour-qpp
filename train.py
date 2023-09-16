@@ -10,7 +10,7 @@ batch_size = 16
 epoch_num = 1
 device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
 model_name = 'bert-base-uncased'
-model_path = f"output/QPP_{model_name}_matched"
+model_path = f"output/QPP_{model_name.split('/')[-1]}_matched"
 
 os.makedirs(model_path, exist_ok=True)
 

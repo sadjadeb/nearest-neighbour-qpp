@@ -41,7 +41,7 @@ def evaluation(args):
     with open(args.run, 'r') as f_run:
         run = pytrec_eval.parse_run(f_run)
 
-    with open(args.qrel, 'r') as f_qrel:
+    with open(args.qrels, 'r') as f_qrel:
         qrel = parse_qrel(f_qrel)
 
     print("len(list(run))", len(list(run)))
