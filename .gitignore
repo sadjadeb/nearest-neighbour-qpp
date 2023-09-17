@@ -1,3 +1,7 @@
 /temp.py
 /venv/
 /.idea/
+/output/
+/data/eval_per_query/
+/data/pkl_files/
+/data/similar_queries/
