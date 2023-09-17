@@ -15,7 +15,7 @@ def parse_qrel(file):
     qrels = {}
     for line in file:
         query_id, _, doc_id, relevance = line.strip().split()
-        query_id = int(query_id)
+        query_id = query_id
         relevance = int(relevance)
         if query_id not in qrels:
             qrels[query_id] = {}
