@@ -4,7 +4,7 @@ from sentence_transformers.cross_encoder import CrossEncoder
 model_name = 'bert-base-uncased'
 trained_model = f"output/QPP_{model_name.split('/')[-1]}_matched"
 
-with open('data/pkl_files/dev_all-MiniLM-L6-v2_mrr10.pkl', 'rb') as f:
+with open('data/pkl_files/dev_deberta-v3-base_mrr10.pkl', 'rb') as f:
     q_dic_test = pickle.load(f)
 
 sentences = []
@@ -21,8 +21,6 @@ for key in q_dic_test:
 
 model = CrossEncoder(trained_model, num_labels=1)
 scores = model.predict(sentences)
-predicted = []
 with open(trained_model + '/results.txt', 'w') as f:
     for i in range(len(sentences)):
-        predicted.append(float(scores[i]))
-        f.write(queries[i] + '\t' + str(predicted[i]) + '\n')
+        f.write(queries[i] + '\t' + str(float(scores[i])) + '\n')

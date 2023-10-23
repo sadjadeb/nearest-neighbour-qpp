@@ -16,7 +16,7 @@ os.makedirs(model_path, exist_ok=True)
 
 model = CrossEncoder(model_name, num_labels=1, max_length=512, device=device)
 
-with open('data/pkl_files/train_all-MiniLM-L6-v2_mrr10.pkl', 'rb') as f:
+with open('data/pkl_files/train_deberta-v3-base_mrr10.pkl', 'rb') as f:
     q_dic_train = pickle.load(f)
 
 train_set = []

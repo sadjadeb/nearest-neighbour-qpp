@@ -67,7 +67,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--test_data", type=str, default="dev_small", choices=["dev_small", "trec-dl-2019", "trec-dl-2020", "trec-dl-2021"])
     parser.add_argument("--target_metric", type=str, default="mrr@10")
-    parser.add_argument("--language_model", type=str, default="sentence-transformers/all-MiniLM-L6-v2")
+    parser.add_argument("--language_model", type=str, default="microsoft/deberta-v3-base")
     args = parser.parse_args()
 
     main(args.test_data, args.target_metric, args.language_model.split("/")[-1])

@@ -72,8 +72,7 @@ def find_similar_queries(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model_name', type=str,
-                        default="sentence-transformers/all-MiniLM-L6-v2")
+    parser.add_argument('--model_name', type=str, default="microsoft/deberta-v3-base")
     parser.add_argument('--base_queries', type=str)
     parser.add_argument('--target_queries', type=str)
     parser.add_argument('--save_embeddings', type=bool, default=False)
