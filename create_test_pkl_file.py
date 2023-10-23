@@ -13,8 +13,12 @@ def main(test_data, target_metric, language_model):
     if test_data == "dev_small":
         test_data = "dev"
 
+    if test_data == "trec-dl-2021":
+        collection_name = "collection-v2.tsv"
+    else:
+        collection_name = "collection.tsv"
+    collection_filepath = os.path.join(msmarco_folder, collection_name)
     col_dic = defaultdict(list)
-    collection_filepath = os.path.join(msmarco_folder, 'collection.tsv')
     with open(collection_filepath, 'r') as f:
         for line in f:
             doc_id, doc_text = line.strip().split('\t')
@@ -61,8 +65,7 @@ def main(test_data, target_metric, language_model):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--test_data", type=str, default="dev_small",
-                        choices=["dev_small", "trec-dl-2019", "trec-dl-2020"])
+    parser.add_argument("--test_data", type=str, default="dev_small", choices=["dev_small", "trec-dl-2019", "trec-dl-2020", "trec-dl-2021"])
     parser.add_argument("--target_metric", type=str, default="mrr@10")
     parser.add_argument("--language_model", type=str, default="sentence-transformers/all-MiniLM-L6-v2")
     args = parser.parse_args()
