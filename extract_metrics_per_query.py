@@ -32,6 +32,7 @@ def evaluation(args):
                "mrr_10": "mrr@10",
                "mrr_100": "mrr@100",
                "map_cut_10": "map@10",
+                "map_cut_20": "map@20",
                "map_cut_100": "map@100",
                "map_cut_1000": "map@1000",
                "recall_5": "recall@5",
@@ -58,8 +59,7 @@ def evaluation(args):
         run_10[qid] = dict(sorted_did_score[0:10])
         run_100[qid] = dict(sorted_did_score[0:100])
 
-    evaluator_ndcg = pytrec_eval.RelevanceEvaluator(qrel, {'ndcg_cut_3', 'ndcg_cut_10', 'ndcg_cut_100',
-                                                           'ndcg_cut_1000'})
+    evaluator_ndcg = pytrec_eval.RelevanceEvaluator(qrel, {'ndcg_cut_3', 'ndcg_cut_10', 'ndcg_cut_100', 'ndcg_cut_1000'})
     results_ndcg = evaluator_ndcg.evaluate(run)
 
     results = {}
@@ -68,7 +68,7 @@ def evaluation(args):
         for measure, score in results_ndcg[qid].items():
             results[qid][mapping[measure]] = score
 
-    evaluator_general = pytrec_eval.RelevanceEvaluator(qrel, {'map_cut_10', 'map_cut_100', 'map_cut_1000',
+    evaluator_general = pytrec_eval.RelevanceEvaluator(qrel, {'map_cut_10', 'map_cut_20', 'map_cut_100', 'map_cut_1000',
                                                               'recall_5', 'recall_100', 'recall_1000'})
     results_general = evaluator_general.evaluate(run)
 
