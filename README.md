@@ -1,21 +1,17 @@
-# pre-nn-qpp : Estimating Query Performance Through Rich Contextualized Query Representations
+# post-nn-qpp : Estimating Query Performance Through Rich Contextualized Query Representations
 
 ## Introduction
-The state-of-the-art query performance prediction methods rely on the fine-tuning of contextual language models to estimate retrieval effectiveness on a per-query basis. Our work in this paper builds on
-this strong foundation and proposes to learn rich query representations by learning the interactions between the query and two important contextual information, namely (1) the set of documents retrieved by that
-query, and (2) the set of similar historical queries with known retrieval effectiveness. We propose that such contextualized query representations
-can be more accurate estimators of query performance as they embed the performance of past similar queries and the semantics of the documents retrieved by the query. We perform extensive experiments on the
-MSMARCO collection and its accompanying query sets including MSMARCO Dev set and TREC Deep Learning tracks of 2019, 2020, 2021,
+The state-of-the-art query performance prediction methods rely on the fine-tuning of contextual language models to estimate retrieval effectiveness on a per-query basis. Our work in this paper builds on this strong foundation and proposes to learn rich query representations by learning the interactions between the query and two important contextual information, namely the set of documents retrieved by that query, and the set of similar historical queries with known retrieval effectiveness. We propose that such contextualized query representations can be more accurate estimators of query performance as they embed the performance of past similar queries and the semantics of the documents retrieved by the query. We perform extensive experiments on the MSMARCO collection and its accompanying query sets including MSMARCO Dev set and TREC Deep Learning tracks of 2019, 2020, 2021,
 and DL-Hard. Our experiments reveal that our proposed method shows robust and effective performance compared to state-of-the-art baselines.
 
 ## Running the code
 first, you need to clone the repository:
 ```
-git clone https://github.com/Narabzad/pre-nn-qpp.git
+git clone https://github.com/sadjadeb/nearest-neighbour-qpp.git
 ```
 Then, you need to create a virtual environment and install the requirements:
 ```
-cd pre-nn-qpp/
+cd nearest-neighbour-qpp/
 sudo apt-get install virtualenv
 virtualenv venv
 source venv/bin/activate
