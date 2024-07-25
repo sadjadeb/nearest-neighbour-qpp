@@ -1,7 +1,7 @@
 # Pre-Retrieval NN-QPP: Estimating Query Performance based on Nearest Neighbor Sampling
 This repository contains the code and resources for our proposed pre-retrieval Query Performance Prediction (QPP) method that leverages nearest neighbors retrieval strategy for predicting the performance of the input query. To do so, we propose to maintain a Querystore where queries with known performances are indexed and sampled at runtime if they are the nearest neighbors of the input query. The performance of the sampled queries are used to estimate the possible performance of the new query. The framework of our propsoed Nearest Neighbor QPP (NN-QPP) method is shown below:
 <p align="center">
-  <img src="https://github.com/Narabzad/NN-QPP/blob/main/architecture.png" width="800" height="400">
+  <img src="https://github.com/sadjadeb/nearest-neighbour-qpp/blob/master/Pre-QPP-Architecture.png" width="800" height="400">
 </p>
 
 ## Performance Comparison with Baselines
@@ -218,7 +218,7 @@ The table below shows Pearson Rho, kendall Tau, and Spearman correlation of diff
 ## Ablation Study
 The performance of NN-QPP may be impacted by the choice of (1) the base language model that is used for creating the Querystore, (2) the number of nearest neighbor samples that are retrieved per query during inference time, and (3) the size of Querystore used for finding the nearest neighbor samples. As such, we investigate their impact on the overall performance of the model. For this purpose, we adopt three different large language models, namely (1) [all-mpnet-base-v2](https://huggingface.co/sentence-transformers/all-mpnet-base-v2), (2) [all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) and (3) [paraphrase-MiniLM-v2](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2) and develop the Querystore independently for each of them and measure the performance of NN-QPP. In addition, we sample queries from the Querystore based on k = {1,3, 5, 7, 9, 10} over all the four datasets. The figures include performance based on Kendall Tau, Pearson Rho, and Spearman correlations.
 <p align="center">
-  <img src="https://github.com/Narabzad/NN-QPP/blob/main/Diagrams.jpg">
+  <img src="https://github.com/sadjadeb/nearest-neighbour-qpp/blob/master/Pre-QPP-Diagram.jpg">
 </p>
 In addition, we explore the impact of Querystore size on the performance of NN-QPP. To accomplish this, we employed a random sampling approach to select various percentages of queries from the pool of 500k MS MARCO queries. For each subset of queries, we construct distinct versions of the Querystore using the paraphrase-MiniLM-v2 language model. Subsequently, we evaluate the NN-QPP method on the MS MARCO Dev query dataset, utilizing the top-10 nearest neighbors sampled from each Querystore. The outcomes of these evaluations are presented in the Table below.
 <div align="center">
